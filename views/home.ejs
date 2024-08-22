@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%=title%></title>
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .container {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        width: 100%;
+        max-width: 400px;
+    }
+
+    h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    #list ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    #list li {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start; /* Align items at the top */
+        word-wrap: break-word;
+        white-space: normal;
+    }
+
+    #list li p {
+        margin: 0;
+        flex-grow: 1;
+        margin-right: 10px;
+        max-width: 70%; /* Restricts the width of the text */
+        word-break: break-word; /* Ensures words break to wrap within the width */
+    }
+
+    #list li .time {
+        white-space: nowrap;
+        flex-shrink: 0;
+        text-align: right; /* Aligns time to the right side */
+        width: 30%; /* Set a specific width for time */
+        align-self: flex-start; /* Keeps the time at the top of the li */
+    }
+
+    .foram button, #list li form button {
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #28a745; /* Green background for the submit button */
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .foram button:hover, #list li form button:hover {
+        background-color: #218838; /* Darker green on hover for submit button */
+    }
+
+    #list li form button {
+        background-color: #dc3545; /* Red background for delete button */
+        padding: 5px 10px;
+        font-size: 14px;
+        margin-left: 10px;
+    }
+
+    #list li form button:hover {
+        background-color: #c82333; /* Darker red on hover for delete button */
+    }
+
+    .foram {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .foram input {
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+    }
+
+    .foram button {
+        background-color: #28a745; /* Green background for the submit button */
+    }
+
+    .foram button:hover {
+        background-color: #218838; /* Darker green on hover for submit button */
+    }
+
+    </style>
+</head>
+<body>
+    <div>
+        <h1>To-Do-List</h1>
+        <div id="list">
+            <ul>
+                <% for (let i of ToDoList) { %>
+                    <li>
+                        <p><%= i.listitem %></p>
+                        <p><%= i.time %></p>
+                        <!-- Form for deleting the task -->
+                        <form action="/delete-to-do-list" method="post" style="margin: 0;">
+                            <input type="hidden" name="id" value="<%= i._id %>">
+                            <button type="submit">-</button>
+                        </form>
+                    </li>
+                <% } %>
+            </ul>
+        </div>
+
+        <form action="create-to-do-list" method="post" class="foram">
+            <input type="text" name="listitem" placeholder="Enter the list" required>
+            <input type="text" name="time" placeholder="Enter the time" required>
+            <button type="submit">Add List</button>
+        </form>
+    </div>
+</body>
+</html>
